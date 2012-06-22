@@ -11,6 +11,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        memainwindow.cpp
+        memainwindow.cpp \
+    rcss3dsocket.cpp \
+    robot.cpp \
+    world.cpp
 
-HEADERS  += memainwindow.h
+HEADERS  += memainwindow.h \
+    rcss3dsocket.h \
+    robot.h \
+    world.h
+
+unix:!macx:!symbian: LIBS += -L$$PWD/../../../../usr/local/lib/simspark/ -lrcssnet3D
+
+INCLUDEPATH += /usr/local/include/simspark
+DEPENDPATH += /usr/local/lib/simspark

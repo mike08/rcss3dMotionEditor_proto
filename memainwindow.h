@@ -2,6 +2,15 @@
 #define MEMAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <iostream>
+#include "rcss3dsocket.h"
+#include "robot.h"
+
+/*
+    main window of program.
+    This class manage all gui classes and robot(server connection and joint angle manager).
+    Each gui class changes some parameter. Main window notice changing and the value to robot.
+*/
 
 class meMainWindow : public QMainWindow
 {
@@ -10,6 +19,10 @@ class meMainWindow : public QMainWindow
 public:
     meMainWindow(QWidget *parent = 0);
     ~meMainWindow();
+
+private:
+    rcss3dSocket* soc;
+    Robot* robo;
 };
 
 #endif // MEMAINWINDOW_H
