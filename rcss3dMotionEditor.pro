@@ -14,12 +14,14 @@ SOURCES += main.cpp\
         memainwindow.cpp \
     rcss3dsocket.cpp \
     robot.cpp \
-    world.cpp
+    world.cpp \
+    merobot.cpp
 
 HEADERS  += memainwindow.h \
     rcss3dsocket.h \
     robot.h \
-    world.h
+    world.h \
+    merobot.h
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../../../../usr/local/lib/simspark/ -lrcssnet3D
 

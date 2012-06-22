@@ -4,7 +4,7 @@
 #include <QtGui/QMainWindow>
 #include <iostream>
 #include "rcss3dsocket.h"
-#include "robot.h"
+#include "merobot.h"
 
 /*
     main window of program.
@@ -22,7 +22,7 @@ public:
 
 private:
     rcss3dSocket* soc;
-    Robot* robo;
+    meRobot* robo;
 };
 
 #endif // MEMAINWINDOW_H

@@ -9,7 +9,7 @@ meMainWindow::meMainWindow(QWidget *parent)
 
     //make socket and robot
     soc = new rcss3dSocket(port, host);
-    robo = new Robot(teamname);
+    robo = new meRobot(teamname);
 
     //robot initializing
     soc->PutMessage(robo->Init());
