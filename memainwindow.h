@@ -2,9 +2,11 @@
 #define MEMAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QTimer>
 #include <iostream>
 #include "rcss3dsocket.h"
 #include "merobot.h"
+#include "poseeditor.h"
 
 /*
     main window of program.
@@ -20,9 +22,16 @@ public:
     meMainWindow(QWidget *parent = 0);
     ~meMainWindow();
 
+public slots:
+    void onTimer();
+
 private:
     rcss3dSocket* soc;
     meRobot* robo;
+
+    QTimer* timer;
+    QTabWidget* qtab;
+    PoseEditor* pe;
 };
 
 #endif // MEMAINWINDOW_H

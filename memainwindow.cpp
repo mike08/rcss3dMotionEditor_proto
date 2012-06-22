@@ -1,4 +1,5 @@
 #include "memainwindow.h"
+//#include <QPushButton>
 
 meMainWindow::meMainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,6 +20,18 @@ meMainWindow::meMainWindow(QWidget *parent)
     }
     soc->PutMessage(robo->Init2());
 
+    qtab = new QTabWidget();
+    this->setCentralWidget(qtab);
+
+//    qtab->addTab(new QPushButton("hoge"), "piyo");
+//    qtab->addTab(new QPushButton("foo"), "bar");
+
+    pe = new PoseEditor();
+    qtab->addTab(pe, tr("pose edit"));
+
+    timer = new QTimer();
+    connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
+    timer->start(5); // less 50 fps.
 }
 
 meMainWindow::~meMainWindow()
@@ -26,3 +39,29 @@ meMainWindow::~meMainWindow()
     delete soc;
     delete robo;
 }
+
+void meMainWindow::onTimer(){
+
+    // check tab index
+
+    // change send string maker by tab index
+
+    /* proto
+
+    soc.get(msg);
+
+    if(tab_index == 0){
+        poseEditor->getPose();
+        sendStr = robo->getNextAngle(msg, pose);
+    }
+
+        // or robo->getNextAngle(msg, pose, bool& isEndPose) is might bettr
+        // not good style, but player robot don't need to inform main program
+        // if getNextAngle returns bool flag, that is far from player robot.
+
+    */
+
+    // soc.get & soc.put
+
+}
+

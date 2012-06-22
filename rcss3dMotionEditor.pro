@@ -13,15 +13,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         memainwindow.cpp \
     rcss3dsocket.cpp \
-    robot.cpp \
     world.cpp \
-    merobot.cpp
+    merobot.cpp \
+    poseeditor.cpp
 
 HEADERS  += memainwindow.h \
     rcss3dsocket.h \
-    robot.h \
     world.h \
-    merobot.h
+    merobot.h \
+    poseeditor.h
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../../../../usr/local/lib/simspark/ -lrcssnet3D
 
