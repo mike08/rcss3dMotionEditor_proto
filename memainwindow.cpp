@@ -23,5 +23,6 @@ meMainWindow::meMainWindow(QWidget *parent)
 
 meMainWindow::~meMainWindow()
 {
-    
+    delete soc;
+    delete robo;
 }
