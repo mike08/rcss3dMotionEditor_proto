@@ -8,6 +8,7 @@
 #include "merobot.h"
 #include "mesharedinformation.h"
 #include "poseeditor.h"
+#include "pose.h"
 
 /*
     main window of program.
@@ -25,7 +26,7 @@ public:
 
 public slots:
     void onTimer();
-
+    void setNewPose(Pose);
 private:
     rcss3dSocket* soc;
     meRobot* robo;

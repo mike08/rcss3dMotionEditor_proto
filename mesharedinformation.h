@@ -2,6 +2,7 @@
 #define MESHAREDINFORMATION_H
 
 #include <QObject>
+#include "pose.h"
 
 /*
     This class hold inputed information on gui
@@ -15,15 +16,17 @@ public:
     explicit meSharedInformation(QObject *parent = 0);
 
     int getUsingEditor();
-    
+    void setPose(Pose newpose);
+    Pose getPose();
+
 signals:
-    
+
 public slots:
     void setUsingEditor(int);
 
 private:
     int usingEditor; // save tab index to ckeck which editor is used
-    // pose_editor_information pei;
+    Pose p; // pose editor information
     // sequence_editor_information sei;
     // ...
 };

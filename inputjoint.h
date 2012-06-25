@@ -19,7 +19,8 @@ public:
     explicit InputJoint(QString name = 0, double min = 20, double max = 20, QWidget *parent = 0);
     
 signals:
-    
+    void valueChanged(double);
+
 public slots:
     void setMaximum(double value);
     void setMaximum(int value);

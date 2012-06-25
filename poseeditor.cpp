@@ -45,4 +45,23 @@ PoseEditor::PoseEditor(QWidget *parent) :
 
     this->setLayout(entirelayout);
 
+    //signal slot connection
+    // if value changed, modify shared information
+    /*
+        "check which joint is modified" is better,
+        but "if some joint is modified, reread all data" is easier
+    */
+
+    for(int i=0; i<22; i++){
+        connect(ij[i], SIGNAL(valueChanged(double)), this, SLOT(makeNewPose()));
+    }
+}
+
+void PoseEditor::makeNewPose(){
+    double inputedValue[22];
+    for(int i=0; i<22; i++){
+        inputedValue[i] = ij[i]->getValue();
+    }
+    Pose p(inputedValue);
+    emit newPoseMade(p);
 }

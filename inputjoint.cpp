@@ -53,6 +53,7 @@ void InputJoint::setValue(double value){
     if(spinbox->value() != value){
         spinbox->setValue(value);
     }
+    emit valueChanged(spinbox->value());
 }
 
 void InputJoint::setValue(int value){
@@ -63,6 +64,7 @@ void InputJoint::setValue(int value){
     if(spinbox->value() != (double)value){
         spinbox->setValue((double)value);
     }
+    emit valueChanged(spinbox->value());
 }
 
 double InputJoint::getValue(){

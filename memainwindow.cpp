@@ -37,6 +37,7 @@ meMainWindow::meMainWindow(QWidget *parent)
 
     // connecting signals and slots
     connect(qtab, SIGNAL(currentChanged(int)), mesi, SLOT(setUsingEditor(int)));
+    connect(pe, SIGNAL(newPoseMade(Pose)), this, SLOT(setNewPose(Pose)));
 
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
     timer->start(5); // less 50 fps.
@@ -73,6 +74,12 @@ void meMainWindow::onTimer(){
         check using editor in robo->getNextAngle by sharedInformation
      */
 
-    // soc.get & soc.put
+    std::string msg;
+    soc->GetMessage(msg);
+    soc->PutMessage(robo->getNextAngle(msg));
+}
 
+void meMainWindow::setNewPose(Pose p){
+    // may be insert option "not copy immediately"
+    mesi->setPose(p);
 }

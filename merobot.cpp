@@ -9,8 +9,7 @@ meRobot::~meRobot(){}
 
 std::string meRobot::getNextAngle(std::string &msg){
 
-
-  return "";
+  return "(beam -5.0 0 0)";
 }
 
 std::string meRobot::Init2(){
