@@ -3,13 +3,14 @@
 
 #include <iostream>
 #include "world.h"
+#include "mesharedinformation.h"
 
 /*
   This class is interface to main window
   This class receive some structure from main window.
   The structure contain target angle of robot pose, inputed by gui part.
 
-  This class is robot. But not inherit "robot class".
+  This class is robot. But not inherit "robot class". (robot class is our another project for soccer game robot)
   Because robot class should decide next action by itself, so there is many "wasted" part for motion editor robot.
 
   -------robot.h------ autonomous soccer player agent ----- this tool aim to use outcome in robot as player
@@ -29,12 +30,14 @@ class meRobot{
   }
 
   std::string Init2(); // send teamname
+  void saveMeSIpointer(meSharedInformation* mesip); // save where gui inputed information will be written
 
   std::string getNextAngle(std::string &msg);
 
+
  protected:
   World world;
-
+  meSharedInformation* mesi;
 };
 
 #endif

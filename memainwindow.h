@@ -6,6 +6,7 @@
 #include <iostream>
 #include "rcss3dsocket.h"
 #include "merobot.h"
+#include "mesharedinformation.h"
 #include "poseeditor.h"
 
 /*
@@ -28,6 +29,8 @@ public slots:
 private:
     rcss3dSocket* soc;
     meRobot* robo;
+
+    meSharedInformation* mesi;
 
     QTimer* timer;
     QTabWidget* qtab;

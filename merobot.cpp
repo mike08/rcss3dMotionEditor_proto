@@ -16,3 +16,7 @@ std::string meRobot::getNextAngle(std::string &msg){
 std::string meRobot::Init2(){
   return "(init (unum 0)(teamname " + world.getTeamname() + "))";
 }
+
+void meRobot::saveMeSIpointer(meSharedInformation *mesip){
+    mesi = mesip;
+}

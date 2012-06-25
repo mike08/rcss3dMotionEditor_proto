@@ -20,6 +20,10 @@ meMainWindow::meMainWindow(QWidget *parent)
     }
     soc->PutMessage(robo->Init2());
 
+    mesi = new meSharedInformation();
+    robo->saveMeSIpointer(mesi);
+
+    // gui part
     qtab = new QTabWidget();
     this->setCentralWidget(qtab);
 

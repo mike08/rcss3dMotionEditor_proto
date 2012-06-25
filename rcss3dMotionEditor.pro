@@ -15,13 +15,15 @@ SOURCES += main.cpp\
     rcss3dsocket.cpp \
     world.cpp \
     merobot.cpp \
-    poseeditor.cpp
+    poseeditor.cpp \
+    mesharedinformation.cpp
 
 HEADERS  += memainwindow.h \
     rcss3dsocket.h \
     world.h \
     merobot.h \
-    poseeditor.h
+    poseeditor.h \
+    mesharedinformation.h
 
 unix:!macx:!symbian: LIBS += -L$$PWD/../../../../usr/local/lib/simspark/ -lrcssnet3D
 
