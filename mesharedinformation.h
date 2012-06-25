@@ -13,13 +13,16 @@ class meSharedInformation : public QObject
     Q_OBJECT
 public:
     explicit meSharedInformation(QObject *parent = 0);
+
+    int getUsingEditor();
     
 signals:
     
 public slots:
+    void setUsingEditor(int);
 
 private:
-    // int using_editor; // save tab index to ckeck which editor is used
+    int usingEditor; // save tab index to ckeck which editor is used
     // pose_editor_information pei;
     // sequence_editor_information sei;
     // ...

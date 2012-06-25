@@ -2,7 +2,7 @@
 #define POSEEDITOR_H
 
 #include <QWidget>
-
+#include "inputjoint.h"
 
 // provide gui to pose edit
 // added as tab0 in main window
@@ -12,11 +12,13 @@ class PoseEditor : public QWidget
     Q_OBJECT
 public:
     explicit PoseEditor(QWidget *parent = 0);
-    
+
 signals:
     
 public slots:
-    
+
+private:
+    InputJoint* ij[22];
 };
 
 #endif // POSEEDITOR_H

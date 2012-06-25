@@ -24,16 +24,20 @@ meMainWindow::meMainWindow(QWidget *parent)
     robo->saveMeSIpointer(mesi);
 
     // gui part
-    qtab = new QTabWidget();
+    qtab = new QTabWidget(this);
     this->setCentralWidget(qtab);
 
 //    qtab->addTab(new QPushButton("hoge"), "piyo");
 //    qtab->addTab(new QPushButton("foo"), "bar");
 
-    pe = new PoseEditor();
+    pe = new PoseEditor(qtab);
     qtab->addTab(pe, tr("pose edit"));
 
-    timer = new QTimer();
+    timer = new QTimer(this);
+
+    // connecting signals and slots
+    connect(qtab, SIGNAL(currentChanged(int)), mesi, SLOT(setUsingEditor(int)));
+
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
     timer->start(5); // less 50 fps.
 }
@@ -65,7 +69,10 @@ void meMainWindow::onTimer(){
 
     */
 
+    /* proto2
+        check using editor in robo->getNextAngle by sharedInformation
+     */
+
     // soc.get & soc.put
 
 }
-
