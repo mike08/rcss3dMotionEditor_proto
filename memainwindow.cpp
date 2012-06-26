@@ -1,5 +1,7 @@
 #include "memainwindow.h"
 //#include <QPushButton>
+//#include <QMenuBar>
+#include <QToolBar>
 
 meMainWindow::meMainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,6 +25,9 @@ meMainWindow::meMainWindow(QWidget *parent)
     mesi = new meSharedInformation();
     robo->saveMeSIpointer(mesi);
 
+    createMenus();
+
+
     // gui part
     qtab = new QTabWidget(this);
     this->setCentralWidget(qtab);
@@ -35,12 +40,26 @@ meMainWindow::meMainWindow(QWidget *parent)
 
     timer = new QTimer(this);
 
+    // set size policy
+//    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     // connecting signals and slots
     connect(qtab, SIGNAL(currentChanged(int)), mesi, SLOT(setUsingEditor(int)));
     connect(pe, SIGNAL(newPoseMade(Pose)), this, SLOT(setNewPose(Pose)));
 
+    connect(beamingAct, SIGNAL(toggled(bool)), mesi, SLOT(setBeaming(bool)));
+
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
     timer->start(5); // less 50 fps.
+}
+
+void meMainWindow::createMenus(){
+    beamingAct = new QAction(tr("beam"), this);
+    beamingAct->setCheckable(true);
+    beamingAct->setChecked(true);
+    QToolBar *robotBar = addToolBar(tr("&Robot"));
+    robotBar->addAction(beamingAct);
+
 }
 
 meMainWindow::~meMainWindow()

@@ -5,6 +5,7 @@ meSharedInformation::meSharedInformation(QObject *parent) :
     QObject(parent)
 {
     usingEditor = 0;
+    beaming = true;
 }
 
 int meSharedInformation::getUsingEditor(){
@@ -23,4 +24,12 @@ void meSharedInformation::setPose(Pose newpose){
 
 Pose meSharedInformation::getPose(){
     return p;
+}
+
+void meSharedInformation::setBeaming(bool beam_arg){
+    beaming = beam_arg;
+}
+
+bool meSharedInformation::getBeaming(){
+    return beaming;
 }

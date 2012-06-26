@@ -9,6 +9,8 @@
 #include "mesharedinformation.h"
 #include "poseeditor.h"
 #include "pose.h"
+#include <QAction>
+
 
 /*
     main window of program.
@@ -27,7 +29,9 @@ public:
 public slots:
     void onTimer();
     void setNewPose(Pose);
-private:
+protected:
+    void createMenus();
+
     rcss3dSocket* soc;
     meRobot* robo;
 
@@ -36,6 +40,10 @@ private:
     QTimer* timer;
     QTabWidget* qtab;
     PoseEditor* pe;
+
+    QAction *beamingAct;
+    // QAction *displayJointPicture *jointPictureAct;
+//    QMenu* robotMenu;
 };
 
 #endif // MEMAINWINDOW_H

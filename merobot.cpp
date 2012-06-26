@@ -18,9 +18,9 @@ std::string meRobot::getNextAngle(std::string &msg){
         // ss << walking.poseAction(temppose)
     }
 
-    //if( beam_flag == true){
-    ss << "(beam -5.0 0 0)";
-    //}
+    if( mesi->getBeaming() == true){
+        ss << "(beam -5.0 0 0)";
+    }
 
     return ss.str();
 }

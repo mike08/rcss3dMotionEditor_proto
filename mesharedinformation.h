@@ -18,14 +18,17 @@ public:
     int getUsingEditor();
     void setPose(Pose newpose);
     Pose getPose();
+    bool getBeaming();
 
 signals:
 
 public slots:
     void setUsingEditor(int);
+    void setBeaming(bool);
 
 private:
     int usingEditor; // save tab index to ckeck which editor is used
+    bool beaming; // beam or not
     Pose p; // pose editor information
     // sequence_editor_information sei;
     // ...
