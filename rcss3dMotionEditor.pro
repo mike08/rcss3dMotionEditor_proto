@@ -29,7 +29,7 @@ HEADERS  += memainwindow.h \
     inputjoint.h \
     pose.h
 
-unix:!macx:!symbian: LIBS += -L$$PWD/../../../../usr/local/lib/simspark/ -lrcssnet3D
+unix:!macx:!symbian: LIBS += -L/usr/local/lib/simspark/ -lrcssnet3D
 
 INCLUDEPATH += /usr/local/include/simspark
 DEPENDPATH += /usr/local/lib/simspark
