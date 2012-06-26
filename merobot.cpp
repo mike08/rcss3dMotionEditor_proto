@@ -1,4 +1,5 @@
 #include "merobot.h"
+#include <sstream>
 
 meRobot::meRobot(std::string teamname){
   world.setTeamname(teamname);
@@ -9,7 +10,19 @@ meRobot::~meRobot(){}
 
 std::string meRobot::getNextAngle(std::string &msg){
 
-  return "(beam -5.0 0 0)";
+    std::stringstream ss; // return value
+
+    if(mesi->getUsingEditor() == 0){
+        // pose editing
+        // Pose temppose = mesi->getPose();
+        // ss << walking.poseAction(temppose)
+    }
+
+    //if( beam_flag == true){
+    ss << "(beam -5.0 0 0)";
+    //}
+
+    return ss.str();
 }
 
 std::string meRobot::Init2(){

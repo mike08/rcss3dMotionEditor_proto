@@ -13,12 +13,12 @@ int meSharedInformation::getUsingEditor(){
 
 void meSharedInformation::setUsingEditor(int tabindex){
     usingEditor = tabindex;
-    qDebug() << "using Editor = " << usingEditor;
+//    qDebug() << "using Editor = " << usingEditor;
 }
 
 void meSharedInformation::setPose(Pose newpose){
     p = newpose;
-    qDebug() << "update pose";
+//    qDebug() << "update pose";
 }
 
 Pose meSharedInformation::getPose(){
