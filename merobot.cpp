@@ -19,7 +19,7 @@ std::string meRobot::getNextAngle(std::string &msg){
     }
 
     if( mesi->getBeaming() == true){
-        ss << "(beam -5.0 0 0)";
+        ss << "(beam -1.0 -3 0)";
     }
 
     return ss.str();

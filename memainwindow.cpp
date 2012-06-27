@@ -1,6 +1,6 @@
 #include "memainwindow.h"
 //#include <QPushButton>
-//#include <QMenuBar>
+#include <QMenuBar>
 #include <QToolBar>
 
 meMainWindow::meMainWindow(QWidget *parent)
@@ -54,10 +54,23 @@ meMainWindow::meMainWindow(QWidget *parent)
 }
 
 void meMainWindow::createMenus(){
+    //create actions
     beamingAct = new QAction(tr("beam"), this);
     beamingAct->setCheckable(true);
     beamingAct->setChecked(true);
-    QToolBar *robotBar = addToolBar(tr("&Robot"));
+
+    //create and set menu
+    QMenu* robotMenu = menuBar()->addMenu(tr("&Robot"));
+    robotMenu->addAction(beamingAct);
+    QMenu* serverMenu = menuBar()->addMenu(tr("Server"));
+    serverMenu->addMenu(tr("under construction..."));
+    QMenu* poseEditMenu = menuBar()->addMenu(tr("&PoseEdit"));
+    poseEditMenu->addMenu(tr("under construction..."));
+    QMenu* sequenceEditMenu = menuBar()->addMenu(tr("&SequenceEdit"));
+    sequenceEditMenu->addMenu(tr("under construction..."));
+
+    //create and set toolbar
+    QToolBar *robotBar = addToolBar(tr("Robot"));
     robotBar->addAction(beamingAct);
 
 }
@@ -66,6 +79,7 @@ meMainWindow::~meMainWindow()
 {
     delete soc;
     delete robo;
+    delete mesi;
 }
 
 void meMainWindow::onTimer(){

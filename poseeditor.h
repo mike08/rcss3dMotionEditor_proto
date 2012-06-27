@@ -20,6 +20,7 @@ public slots:
     void makeNewPose();
 private:
     InputJoint* ij[22];
+
 };
 
 #endif // POSEEDITOR_H
