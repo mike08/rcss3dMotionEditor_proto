@@ -3,6 +3,8 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
+#include <QDebug>
+
 InputJoint::InputJoint(QString arg_name, double min, double max, QWidget *parent) :
     QWidget(parent)
 {
@@ -15,6 +17,14 @@ InputJoint::InputJoint(QString arg_name, double min, double max, QWidget *parent
     hLayout->addWidget(new QLabel(arg_name));
     hLayout->addWidget(slider);
     hLayout->addWidget(spinbox);
+
+//    int margin[4];
+//    hLayout->getContentsMargins(&margin[0], &margin[1], &margin[2], &margin[3]);
+//    qDebug() << "hoge";
+//    for(int i=0; i<4; i++){
+//        qDebug() << margin[i];
+//    }
+    hLayout->setContentsMargins(0, 1, 0, 1);
 
     this->setLayout(hLayout);
 
