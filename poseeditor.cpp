@@ -1,5 +1,5 @@
 #include "poseeditor.h"
-#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QGridLayout>
 
 PoseEditor::PoseEditor(QWidget *parent) :
@@ -28,22 +28,19 @@ PoseEditor::PoseEditor(QWidget *parent) :
     ij[20] = new InputJoint(tr("llj6"), -45, 25, this);
     ij[21]= new InputJoint(tr("rlj6"), -25, 45, this);
 
-    QVBoxLayout *hjlayout = new QVBoxLayout();
-    hjlayout->addStretch();
-    hjlayout->addWidget(ij[0]);
-    hjlayout->addWidget(ij[1]);
-
-    QGridLayout *allayout = new QGridLayout();
+    QGridLayout *jointLayout = new QGridLayout();
+    jointLayout->addWidget(ij[0], 0, 0, 1, 2);
+    jointLayout->addWidget(ij[1], 1, 0, 1, 2);
     for(int i=1; i<11; i++){
-        allayout->addWidget(ij[i*2], i, 0);
-        allayout->addWidget(ij[i*2+1], i, 1);
+        jointLayout->addWidget(ij[i*2], i+2, 0);
+        jointLayout->addWidget(ij[i*2+1], i+2, 1);
     }
 
-    QVBoxLayout *entirelayout = new QVBoxLayout();
-    entirelayout->addLayout(hjlayout);
-    entirelayout->addLayout(allayout);
+    QHBoxLayout *entireLayout = new QHBoxLayout();
+    entireLayout->addLayout(jointLayout);
 
-    this->setLayout(entirelayout);
+    this->setLayout(entireLayout);
+    this->setMinimumSize(300, 350);
 
     //signal slot connection
     // if value changed, modify shared information
