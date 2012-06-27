@@ -27,6 +27,7 @@ public:
     ~meMainWindow();
 
 public slots:
+    void connectRobot();
     void onTimer();
     void setNewPose(Pose);
 protected:
@@ -41,9 +42,9 @@ protected:
     QTabWidget* qtab;
     PoseEditor* pe;
 
+    QAction *connectRobotAct;
     QAction *beamingAct;
-    // QAction *displayJointPicture *jointPictureAct;
-//    QMenu* robotMenu;
+    // QAction *displayJointPictureAct;
 };
 
 #endif // MEMAINWINDOW_H

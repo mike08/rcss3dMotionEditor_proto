@@ -6,24 +6,27 @@
 meMainWindow::meMainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    int port = 3100;
-    std::string host = "127.0.0.1";
-    std::string teamname = "MotionEditor";
+//    int port = 3100;
+//    std::string host = "127.0.0.1";
+//    std::string teamname = "MotionEditor";
 
-    //make socket and robot
-    soc = new rcss3dSocket(port, host);
-    robo = new meRobot(teamname);
+//    //make socket and robot
+//    soc = new rcss3dSocket(port, host);
+//    robo = new meRobot(teamname);
 
-    //robot initializing
-    soc->PutMessage(robo->Init());
-    {
-        std::string msg;
-        soc->GetMessage(msg);
-    }
-    soc->PutMessage(robo->Init2());
+//    //robot initializing
+//    soc->PutMessage(robo->Init());
+//    {
+//        std::string msg;
+//        soc->GetMessage(msg);
+//    }
+//    soc->PutMessage(robo->Init2());
 
-    mesi = new meSharedInformation();
-    robo->saveMeSIpointer(mesi);
+//    mesi = new meSharedInformation();
+//    robo->saveMeSIpointer(mesi);
+    soc = NULL;
+    robo = NULL;
+    connectRobot();
 
     createMenus();
 
@@ -48,6 +51,7 @@ meMainWindow::meMainWindow(QWidget *parent)
     connect(pe, SIGNAL(newPoseMade(Pose)), this, SLOT(setNewPose(Pose)));
 
     connect(beamingAct, SIGNAL(toggled(bool)), mesi, SLOT(setBeaming(bool)));
+    connect(connectRobotAct, SIGNAL(triggered()), this, SLOT(connectRobot()));
 
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
     timer->start(5); // less 50 fps.
@@ -58,10 +62,12 @@ void meMainWindow::createMenus(){
     beamingAct = new QAction(tr("beam"), this);
     beamingAct->setCheckable(true);
     beamingAct->setChecked(true);
+    connectRobotAct = new QAction(tr("connect"), this);
 
     //create and set menu
     QMenu* robotMenu = menuBar()->addMenu(tr("&Robot"));
     robotMenu->addAction(beamingAct);
+    robotMenu->addAction(connectRobotAct);
     QMenu* serverMenu = menuBar()->addMenu(tr("Server"));
     serverMenu->addMenu(tr("under construction..."));
     QMenu* poseEditMenu = menuBar()->addMenu(tr("&PoseEdit"));
@@ -82,31 +88,37 @@ meMainWindow::~meMainWindow()
     delete mesi;
 }
 
-void meMainWindow::onTimer(){
+void meMainWindow::connectRobot(){
+    int port = 3100;
+    std::string host = "127.0.0.1";
+    std::string teamname = "MotionEditor";
 
-    // check tab index
-
-    // change send string maker by tab index
-
-    /* proto
-
-    soc.get(msg);
-
-    if(tab_index == 0){
-        poseEditor->getPose();
-        sendStr = robo->getNextAngle(msg, pose);
+    //if already exist robot
+    if(soc != NULL){
+        soc->Done();
+        delete soc;
+    }
+    if(robo != NULL){
+        delete robo;
     }
 
-        // or robo->getNextAngle(msg, pose, bool& isEndPose) is might bettr
-        // not good style, but player robot don't need to inform main program
-        // if getNextAngle returns bool flag, that is far from player robot.
+    //make socket and robot
+    soc = new rcss3dSocket(port, host);
+    robo = new meRobot(teamname);
 
-    */
+    //robot initializing
+    soc->PutMessage(robo->Init());
+    {
+        std::string msg;
+        soc->GetMessage(msg);
+    }
+    soc->PutMessage(robo->Init2());
 
-    /* proto2
-        check using editor in robo->getNextAngle by sharedInformation
-     */
+    mesi = new meSharedInformation();
+    robo->saveMeSIpointer(mesi);
+}
 
+void meMainWindow::onTimer(){
     std::string msg;
     soc->GetMessage(msg);
     soc->PutMessage(robo->getNextAngle(msg));
