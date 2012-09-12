@@ -18,7 +18,9 @@ SOURCES += main.cpp\
     poseeditor.cpp \
     mesharedinformation.cpp \
     inputjoint.cpp \
-    pose.cpp
+    pose.cpp \
+    guieditortab.cpp \
+    sequence.cpp
 
 HEADERS  += memainwindow.h \
     rcss3dsocket.h \
@@ -27,7 +29,9 @@ HEADERS  += memainwindow.h \
     poseeditor.h \
     mesharedinformation.h \
     inputjoint.h \
-    pose.h
+    pose.h \
+    guieditortab.h \
+    sequence.h
 
 unix:!macx:!symbian: LIBS += -L/usr/local/lib/simspark/ -lrcssnet3D
 
