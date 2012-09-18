@@ -12,6 +12,7 @@ std::string meRobot::getNextAngle(std::string &msg){
 
     std::stringstream ss; // return value
 
+    /*
     if(mesi->getUsingEditor() == 0){
         // pose editing
         // Pose temppose = mesi->getPose();
@@ -21,6 +22,7 @@ std::string meRobot::getNextAngle(std::string &msg){
     if( mesi->getBeaming() == true){
         ss << "(beam -1.0 -3 0)";
     }
+    */
 
     return ss.str();
 }
@@ -30,5 +32,5 @@ std::string meRobot::Init2(){
 }
 
 void meRobot::saveMeSIpointer(meSharedInformation *mesip){
-    mesi = mesip;
+//    mesi = mesip;
 }

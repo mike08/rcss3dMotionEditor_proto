@@ -10,6 +10,7 @@
 #include "poseeditor.h"
 #include "pose.h"
 #include <QAction>
+#include "guieditortab.h"
 
 
 /*
@@ -33,14 +34,18 @@ public slots:
 protected:
     void createMenus();
 
-    rcss3dSocket* soc;
+    rcss3dSocket soc;
     meRobot* robo;
 
     meSharedInformation* mesi;
 
     QTimer* timer;
+
+    GuiEditorTab* gui;
+
     QTabWidget* qtab;
     PoseEditor* pe;
+
 
     QAction *connectRobotAct;
     QAction *beamingAct;

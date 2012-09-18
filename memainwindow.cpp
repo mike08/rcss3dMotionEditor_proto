@@ -2,6 +2,7 @@
 //#include <QPushButton>
 #include <QMenuBar>
 #include <QToolBar>
+#include <QDebug>
 
 meMainWindow::meMainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,34 +25,41 @@ meMainWindow::meMainWindow(QWidget *parent)
 
 //    mesi = new meSharedInformation();
 //    robo->saveMeSIpointer(mesi);
-    soc = NULL;
+
+    qDebug() << "starting program";
+
     robo = NULL;
     connectRobot();
 
+    qDebug() << "create menu";
     createMenus();
 
-
     // gui part
-    qtab = new QTabWidget(this);
-    this->setCentralWidget(qtab);
+    gui = new GuiEditorTab(this);
+    this->setCentralWidget(gui);
+
+//    qtab = new QTabWidget(this);
+//    this->setCentralWidget(qtab);
 
 //    qtab->addTab(new QPushButton("hoge"), "piyo");
 //    qtab->addTab(new QPushButton("foo"), "bar");
 
-    pe = new PoseEditor(qtab);
-    qtab->addTab(pe, tr("pose edit"));
+//    pe = new PoseEditor(qtab);
+//    qtab->addTab(pe, tr("pose edit"));
 
     timer = new QTimer(this);
 
     // set size policy
 //    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    // connecting signals and slots
-    connect(qtab, SIGNAL(currentChanged(int)), mesi, SLOT(setUsingEditor(int)));
-    connect(pe, SIGNAL(newPoseMade(Pose)), this, SLOT(setNewPose(Pose)));
 
-    connect(beamingAct, SIGNAL(toggled(bool)), mesi, SLOT(setBeaming(bool)));
-    connect(connectRobotAct, SIGNAL(triggered()), this, SLOT(connectRobot()));
+    qDebug() << "connectiong at main window";
+    // connecting signals and slots
+//    connect(qtab, SIGNAL(currentChanged(int)), mesi, SLOT(setUsingEditor(int)));
+//    connect(pe, SIGNAL(newPoseMade(Pose)), this, SLOT(setNewPose(Pose)));
+
+//    connect(beamingAct, SIGNAL(toggled(bool)), mesi, SLOT(setBeaming(bool)));
+//    connect(connectRobotAct, SIGNAL(triggered()), this, SLOT(connectRobot()));
 
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
     timer->start(5); // less 50 fps.
@@ -83,9 +91,9 @@ void meMainWindow::createMenus(){
 
 meMainWindow::~meMainWindow()
 {
-    delete soc;
+//    delete soc;
     delete robo;
-    delete mesi;
+//    delete mesi;
 }
 
 void meMainWindow::connectRobot(){
@@ -94,37 +102,38 @@ void meMainWindow::connectRobot(){
     std::string teamname = "MotionEditor";
 
     //if already exist robot
-    if(soc != NULL){
-        soc->Done();
-        delete soc;
-    }
+//    if(soc != NULL){
+//        soc->Done();
+//        delete soc;
+//    }
     if(robo != NULL){
         delete robo;
     }
 
     //make socket and robot
-    soc = new rcss3dSocket(port, host);
+//    soc = new rcss3dSocket(port, host);
+    soc.Connect(port, host);
     robo = new meRobot(teamname);
 
     //robot initializing
-    soc->PutMessage(robo->Init());
+    soc.PutMessage(robo->Init());
     {
         std::string msg;
-        soc->GetMessage(msg);
+        soc.GetMessage(msg);
     }
-    soc->PutMessage(robo->Init2());
+    soc.PutMessage(robo->Init2());
 
-    mesi = new meSharedInformation();
-    robo->saveMeSIpointer(mesi);
+//    mesi = new meSharedInformation();
+//    robo->saveMeSIpointer(mesi);
 }
 
 void meMainWindow::onTimer(){
     std::string msg;
-    soc->GetMessage(msg);
-    soc->PutMessage(robo->getNextAngle(msg));
+    soc.GetMessage(msg);
+    soc.PutMessage(robo->getNextAngle(msg));
 }
 
 void meMainWindow::setNewPose(Pose p){
     // may be insert option "not copy immediately"
-    mesi->setPose(p);
+//    mesi->setPose(p);
 }
