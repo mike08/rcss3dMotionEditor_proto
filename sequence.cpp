@@ -8,12 +8,12 @@ Sequence::Sequence()
 }
 
 bool Sequence::addPose(Pose p){
-    if(num == MAX_NUM){
+    if(num >= MAX_NUM){
         std::cout << "sequence::addPose : sequence has MAX_NUM poses. cannot add any more" << std::endl;
         return false;
     }
 
-    poses[num] = p;
+    poses[num-1] = p;
     num++;
 
     return true;
@@ -26,6 +26,12 @@ bool Sequence::setPose(int n, Pose p){
     }
 
     poses[n] = p;
+
+    return true;
+}
+
+bool Sequence::clear(){
+    num = 0;
 
     return true;
 }

@@ -62,3 +62,9 @@ void PoseEditor::makeNewPose(){
     Pose p(inputedValue);
     emit newPoseMade(p);
 }
+
+void PoseEditor::loadPose(Pose p){
+    for(int i=0; i<22; i++){
+        ij[i]->setValue(p.getTarget()[i]);
+    }
+}

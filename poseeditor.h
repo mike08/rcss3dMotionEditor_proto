@@ -20,6 +20,7 @@ public slots:
     void makeNewPose();
 private:
     InputJoint* ij[22];
+    void loadPose(Pose p); // set slider and spinbox by loaded pose
 
 };
 
