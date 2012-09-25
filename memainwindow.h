@@ -30,12 +30,14 @@ public:
 public slots:
     void connectRobot();
     void onTimer();
-    void setNewPose(Pose);
+    void changeBeaming(bool);
+    void setSequenceToRobot(Sequence);
 protected:
     void createMenus();
 
     rcss3dSocket soc;
     meRobot* robo;
+    bool beaming;
 
     meSharedInformation* mesi;
 

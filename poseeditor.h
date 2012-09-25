@@ -2,6 +2,7 @@
 #define POSEEDITOR_H
 
 #include <QWidget>
+#include <QListWidget>
 #include "inputjoint.h"
 #include "pose.h"
 
@@ -16,12 +17,17 @@ public:
 
 signals:
     void newPoseMade(Pose);
+
 public slots:
     void makeNewPose();
+    void loadPose(Pose p); // set slider and spinbox by loaded pose
+    void loadPose(int i);
+
 private:
     InputJoint* ij[22];
-    void loadPose(Pose p); // set slider and spinbox by loaded pose
 
+    QListWidget* posesList;
+    Pose poseEditorList[10];
 };
 
 #endif // POSEEDITOR_H

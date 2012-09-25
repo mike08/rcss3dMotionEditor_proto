@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include "world.h"
-#include "mesharedinformation.h"
+#include "sequence.h"
+
 
 /*
   This class is interface to main window
@@ -30,14 +31,13 @@ class meRobot{
   }
 
   std::string Init2(); // send teamname
-  void saveMeSIpointer(meSharedInformation* mesip); // save where gui inputed information will be written
 
   std::string getNextAngle(std::string &msg);
 
+  void setSequence(Sequence newSeq);
 
  protected:
   World world;
-  meSharedInformation* mesi;
 };
 
 #endif

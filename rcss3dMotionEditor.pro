@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     inputjoint.cpp \
     pose.cpp \
     guieditortab.cpp \
-    sequence.cpp
+    sequence.cpp \
+    movementbase.cpp \
+    action.cpp
 
 HEADERS  += memainwindow.h \
     rcss3dsocket.h \
@@ -31,7 +33,10 @@ HEADERS  += memainwindow.h \
     inputjoint.h \
     pose.h \
     guieditortab.h \
-    sequence.h
+    sequence.h \
+    movementbase.h \
+    util.h \
+    action.h
 
 unix:!macx:!symbian: LIBS += -L/usr/local/lib/simspark/ -lrcssnet3D
 

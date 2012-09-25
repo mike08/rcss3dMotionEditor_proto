@@ -1,6 +1,7 @@
 #include "poseeditor.h"
 #include <QHBoxLayout>
 #include <QGridLayout>
+#include <QDebug>
 
 PoseEditor::PoseEditor(QWidget *parent) :
     QWidget(parent)
@@ -28,6 +29,19 @@ PoseEditor::PoseEditor(QWidget *parent) :
     ij[20] = new InputJoint(tr("llj6"), -45, 25, this);
     ij[21]= new InputJoint(tr("rlj6"), -25, 45, this);
 
+    posesList = new QListWidget();
+    posesList->addItem(tr("pose0"));
+    posesList->addItem(tr("pose1"));
+    posesList->addItem(tr("pose2"));
+    posesList->addItem(tr("pose3"));
+    posesList->addItem(tr("pose4"));
+    posesList->addItem(tr("pose5"));
+    posesList->addItem(tr("pose6"));
+    posesList->addItem(tr("pose7"));
+    posesList->addItem(tr("pose8"));
+    posesList->addItem(tr("pose9"));
+    posesList->setCurrentRow(0);
+
     QGridLayout *jointLayout = new QGridLayout();
     jointLayout->addWidget(ij[0], 0, 0, 1, 2);
     jointLayout->addWidget(ij[1], 1, 0, 1, 2);
@@ -37,6 +51,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
     }
 
     QHBoxLayout *entireLayout = new QHBoxLayout();
+    entireLayout->addWidget(posesList);
     entireLayout->addLayout(jointLayout);
 
     this->setLayout(entireLayout);
@@ -52,6 +67,9 @@ PoseEditor::PoseEditor(QWidget *parent) :
     for(int i=0; i<22; i++){
         connect(ij[i], SIGNAL(valueChanged(double)), this, SLOT(makeNewPose()));
     }
+
+    connect(posesList, SIGNAL(currentRowChanged(int)), this, SLOT(loadPose(int)));
+
 }
 
 void PoseEditor::makeNewPose(){
@@ -60,6 +78,7 @@ void PoseEditor::makeNewPose(){
         inputedValue[i] = ij[i]->getValue();
     }
     Pose p(inputedValue);
+    poseEditorList[posesList->currentRow()] = p;
     emit newPoseMade(p);
 }
 
@@ -67,4 +86,9 @@ void PoseEditor::loadPose(Pose p){
     for(int i=0; i<22; i++){
         ij[i]->setValue(p.getTarget()[i]);
     }
+}
+
+void PoseEditor::loadPose(int i){
+    loadPose(poseEditorList[i]);
+//    qDebug() << "poseEditorList changed to " << i;
 }
