@@ -29,6 +29,7 @@ public slots:
 
     void setValue(double value);
     void setValue(int value);
+    void setValueNoSignal(double value);
 
     double getValue();
 

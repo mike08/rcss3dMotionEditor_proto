@@ -59,24 +59,53 @@ void InputJoint::setValue(double value){
     if(value > spinbox->maximum() || value < spinbox->minimum()){
         return;
     }
+
+    if(slider->value() == (int)value && spinbox->value() == value){
+        return;
+    }
+
     slider->setValue((int)value);
     if(spinbox->value() != value){
         spinbox->setValue(value);
     }
     emit valueChanged(spinbox->value());
+
 }
 
 void InputJoint::setValue(int value){
     if(value > (int)(spinbox->maximum()) || value < (int)(spinbox->minimum())){
         return;
     }
+
+    if(slider->value() == value && spinbox->value() == (double)value){
+        return;
+    }
+
     slider->setValue(value);
     if(spinbox->value() != (double)value){
         spinbox->setValue((double)value);
     }
     emit valueChanged(spinbox->value());
+
 }
 
 double InputJoint::getValue(){
     return spinbox->value();
+}
+
+void InputJoint::setValueNoSignal(double value){
+    if(value > spinbox->maximum() || value < spinbox->minimum()){
+        return;
+    }
+
+    if(slider->value() == (int)value && spinbox->value() == value){
+        return;
+    }
+
+    slider->setValue((int)value);
+    if(spinbox->value() != value){
+        spinbox->setValue(value);
+    }
+//    emit valueChanged(spinbox->value());
+
 }

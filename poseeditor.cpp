@@ -68,7 +68,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
         connect(ij[i], SIGNAL(valueChanged(double)), this, SLOT(makeNewPose()));
     }
 
-    connect(posesList, SIGNAL(currentRowChanged(int)), this, SLOT(loadPose(int)));
+    connect(posesList, SIGNAL(currentRowChanged(int)), this, SLOT(changePoseListRow(int)));
 
 }
 
@@ -79,16 +79,24 @@ void PoseEditor::makeNewPose(){
     }
     Pose p(inputedValue);
     poseEditorList[posesList->currentRow()] = p;
+//    qDebug() << "newPoseMade @ makeNewPose";
     emit newPoseMade(p);
+}
+
+void PoseEditor::changePoseListRow(int i){
+//    qDebug() << "changePoseListRow " << i;
+    loadPose(i);
+//    qDebug() << "newPoseMade @ changePoseListRow";
+    emit newPoseMade(poseEditorList[i]);
 }
 
 void PoseEditor::loadPose(Pose p){
     for(int i=0; i<22; i++){
-        ij[i]->setValue(p.getTarget()[i]);
+        ij[i]->setValueNoSignal(p.getTarget()[i]);
     }
 }
 
 void PoseEditor::loadPose(int i){
+    //    qDebug() << "poseEditorList changed to " << i;
     loadPose(poseEditorList[i]);
-//    qDebug() << "poseEditorList changed to " << i;
 }

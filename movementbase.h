@@ -5,19 +5,17 @@
 #include <map>
 #include <sstream>
 #include <math.h>
-
-// in game robot, these file are saved in upper directory
-#include "util.h"
-#include "world.h"
-#include "action.h"
+#include "../util.h"
+#include "../world.h"
+#include "../action.h"
 
   class MovementBase{
 
     public:
-      MovementBase(){}
-      virtual ~MovementBase(){}
+      MovementBase(){};
+      virtual ~MovementBase(){};
       
-      virtual std::string getNextAngle(Action& act, World& w){}
+      virtual std::string getNextAngle(Action& act, World& w){};
         //return the next angle
 
     protected:
