@@ -5,9 +5,9 @@
 #include <map>
 #include <sstream>
 #include <math.h>
-#include "../util.h"
-#include "../world.h"
-#include "../action.h"
+#include "util.h"
+#include "world.h"
+#include "action.h"
 
   class MovementBase{
 

@@ -6,7 +6,6 @@
 #include <iostream>
 #include "rcss3dsocket.h"
 #include "merobot.h"
-#include "mesharedinformation.h"
 #include "poseeditor.h"
 #include "pose.h"
 #include <QAction>
@@ -38,8 +37,6 @@ protected:
     rcss3dSocket soc;
     meRobot* robo;
     bool beaming;
-
-    meSharedInformation* mesi;
 
     QTimer* timer;
 

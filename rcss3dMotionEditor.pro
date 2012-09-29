@@ -16,7 +16,6 @@ SOURCES += main.cpp\
     world.cpp \
     merobot.cpp \
     poseeditor.cpp \
-    mesharedinformation.cpp \
     inputjoint.cpp \
     pose.cpp \
     guieditortab.cpp \
@@ -29,7 +28,6 @@ HEADERS  += memainwindow.h \
     world.h \
     merobot.h \
     poseeditor.h \
-    mesharedinformation.h \
     inputjoint.h \
     pose.h \
     guieditortab.h \

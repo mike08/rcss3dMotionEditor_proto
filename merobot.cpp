@@ -12,6 +12,8 @@ std::string meRobot::getNextAngle(std::string &msg){
 
     std::stringstream ss; // return value
 
+    world.update(msg);
+
     /*
     if( mesi->getBeaming() == true){
         ss << "(beam -1.0 -3 0)";
