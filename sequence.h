@@ -20,10 +20,12 @@ public:
     bool addPose(Pose p); // add "p" in poses[num] and update num
     bool setPose(int n, Pose p); // overwrite poses[n-1] by "p"
     bool clear(); // clear poses and reset number (actually, poses isn't std::vector, so clear() just reset number)
+    int getNum(); // get how many poses the sequence has
+    Pose getPose(int i); // get poses[i] .  checked not to access poses[larger_than_num]
 
 private:
     static const int MAX_NUM = 10;
-    int num; // number of using pose. 0 in initialized. max is MAX_NUM
+    int num; // number of using pose. 0 in initialized(and meaning poses[] is empty). max is MAX_NUM (but should not access poses[MAX_NUM])
     Pose poses[MAX_NUM]; // hold space. when sequence has X poses(num = X), poses[] is used poses[0]...poses[X-1]
 };
 

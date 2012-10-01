@@ -144,6 +144,7 @@ void meMainWindow::connectRobot(){
 }
 
 void meMainWindow::onTimer(){
+    qDebug() << "tick";
     std::string msg;
     soc.GetMessage(msg);
     std::string ret = robo->getNextAngle(msg);
@@ -158,5 +159,6 @@ void meMainWindow::changeBeaming(bool b){
 }
 
 void meMainWindow::setSequenceToRobot(Sequence s){
+    qDebug() << "new seq num = " << s.getNum();
     robo->setSequence(s);
 }

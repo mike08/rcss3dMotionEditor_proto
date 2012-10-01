@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     guieditortab.cpp \
     sequence.cpp \
     movementbase.cpp \
-    action.cpp
+    action.cpp \
+    sequencemovement.cpp
 
 HEADERS  += memainwindow.h \
     rcss3dsocket.h \
@@ -34,7 +35,8 @@ HEADERS  += memainwindow.h \
     sequence.h \
     movementbase.h \
     util.h \
-    action.h
+    action.h \
+    sequencemovement.h
 
 unix:!macx:!symbian: LIBS += -L/usr/local/lib/simspark/ -lrcssnet3D
 

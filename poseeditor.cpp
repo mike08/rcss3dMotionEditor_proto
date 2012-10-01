@@ -30,7 +30,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
     ij[21]= new InputJoint(tr("rlj6"), -25, 45, this);
 
     posesList = new QListWidget();
-    posesList->addItem(tr("pose0"));
+    posesList->addItem(tr("pose0")); // using for(i ; i< length_of_posesList; i++) is better
     posesList->addItem(tr("pose1"));
     posesList->addItem(tr("pose2"));
     posesList->addItem(tr("pose3"));

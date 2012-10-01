@@ -4,6 +4,7 @@
 #include <iostream>
 #include "world.h"
 #include "sequence.h"
+#include "sequencemovement.h"
 
 
 /*
@@ -38,6 +39,9 @@ class meRobot{
 
  protected:
   World world;
+  SequenceMovement seqMove;
+  bool newOneComeFlag;
+  Sequence next_seq;
 };
 
 #endif
