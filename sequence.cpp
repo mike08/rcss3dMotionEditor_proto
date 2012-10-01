@@ -8,20 +8,15 @@ Sequence::Sequence()
 }
 
 bool Sequence::addPose(Pose p){
-    std::cout << "Sequence::addPose start  add : " << num << std::endl;
 
     if(num >= MAX_NUM){
         std::cout << "sequence::addPose : sequence has MAX_NUM poses. cannot add any more" << std::endl;
         return false;
     }
 
-    std::cout << "Sequence::addPose after  if  : " << num << std::endl;
+    poses[num] = p;
 
-    poses[num-1] = p;
-
-    std::cout << "Sequence::addPose before add : " << num << std::endl;
-    num++;
-    std::cout << "Sequence::addPose after  add : " << num << std::endl;
+    num = num++;
 
     return true;
 }

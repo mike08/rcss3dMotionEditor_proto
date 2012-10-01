@@ -32,3 +32,4 @@ Pose& Pose::operator=(const Pose& obj){
     this->gain = obj.gain;
     return *this;
 }
+
