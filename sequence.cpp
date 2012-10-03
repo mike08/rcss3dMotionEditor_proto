@@ -4,7 +4,7 @@
 Sequence::Sequence()
 {
     num = 0;
-    std::cout << "sequence counstructor : " << num << std::endl;
+//    std::cout << "sequence counstructor : " << num << std::endl;
 }
 
 bool Sequence::addPose(Pose p){

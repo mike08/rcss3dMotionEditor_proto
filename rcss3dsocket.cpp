@@ -50,7 +50,7 @@ void rcss3dSocket::PutMessage(const std::string &msg){
   unsigned int len = htonl(msg.size());
   std::string prefix((const char*)&len, sizeof(unsigned int));
   std::string str = prefix + msg;
-  //  std::cout << "PutMessage\n" << str << std::endl;
+//  std::cout << "PutMessage\n" << str << std::endl;
   soc.send(str.data(), str.size());
 }
 

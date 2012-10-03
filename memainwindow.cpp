@@ -144,7 +144,7 @@ void meMainWindow::connectRobot(){
 }
 
 void meMainWindow::onTimer(){
-    qDebug() << "tick";
+//    qDebug() << "tick";
     std::string msg;
     soc.GetMessage(msg);
     std::string ret = robo->getNextAngle(msg);

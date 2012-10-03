@@ -19,11 +19,11 @@ GuiEditorTab::GuiEditorTab(QWidget *parent) :
 
 void GuiEditorTab::poseEditorReceiver(Pose p){
     Sequence tempSeq;
-    qDebug() << "GuiEditorTab::poseEditorReceiver before add : " << tempSeq.getNum();
+//    qDebug() << "GuiEditorTab::poseEditorReceiver before add : " << tempSeq.getNum();
 
     tempSeq.addPose(p);
 
-    qDebug() << "GuiEditorTab::poseEditorReceiver after  add : " << tempSeq.getNum();
+//    qDebug() << "GuiEditorTab::poseEditorReceiver after  add : " << tempSeq.getNum();
 
     emit newSequenceMade(tempSeq);
 }
