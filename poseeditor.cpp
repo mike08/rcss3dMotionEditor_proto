@@ -4,10 +4,12 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QFileDialog>
+#include <QLabel>
 #include <fstream>
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
+
 
 
 PoseEditor::PoseEditor(QWidget *parent) :
@@ -54,10 +56,26 @@ PoseEditor::PoseEditor(QWidget *parent) :
     QPushButton *saveProjectButton = new QPushButton(tr("save project"));
     QPushButton *loadProjectButton = new QPushButton(tr("load project"));
 
+    fromComboBox = new QComboBox();
+    toComboBox = new QComboBox();
+    QPushButton* copyButton = new QPushButton(tr("copy"));
+
+    for(int i=0; i < posesList->count(); i++){
+        fromComboBox->addItem(posesList->item(i)->text());
+        toComboBox->addItem(posesList->item(i)->text());
+    }
+
+    QHBoxLayout *copyerLayout = new QHBoxLayout();
+    copyerLayout->addWidget(fromComboBox);
+    copyerLayout->addWidget(new QLabel(tr("to")));
+    copyerLayout->addWidget(toComboBox);
+    copyerLayout->addWidget(copyButton);
+
     QVBoxLayout *utilityLayout = new QVBoxLayout();
     utilityLayout->addWidget(posesList);
     utilityLayout->addWidget(saveProjectButton);
     utilityLayout->addWidget(loadProjectButton);
+    utilityLayout->addLayout(copyerLayout);
 
     QGridLayout *jointLayout = new QGridLayout();
     jointLayout->addWidget(ij[0], 0, 0, 1, 2);
@@ -89,6 +107,9 @@ PoseEditor::PoseEditor(QWidget *parent) :
 
     connect(saveProjectButton, SIGNAL(clicked()), this, SLOT(saveProject()));
     connect(loadProjectButton, SIGNAL(clicked()), this, SLOT(loadProject()));
+    connect(copyButton, SIGNAL(clicked()), this, SLOT(copyPose()));
+    connect(posesList, SIGNAL(currentTextChanged(QString)), this, SLOT(renameComboBox()));
+
 }
 
 void PoseEditor::makeNewPose(){
@@ -192,4 +213,14 @@ void PoseEditor::loadProject(){
         }
     }
     changePoseListRow(posesList->currentRow());
+}
+
+void PoseEditor::copyPose(){
+    poseEditorList[toComboBox->currentIndex()] = poseEditorList[fromComboBox->currentIndex()];
+    changePoseListRow(posesList->currentRow());
+}
+
+void PoseEditor::renameComboBox(){
+    fromComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
+    toComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
 }

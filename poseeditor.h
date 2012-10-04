@@ -5,6 +5,7 @@
 #include <QListWidget>
 #include "inputjoint.h"
 #include "pose.h"
+#include <QComboBox>
 
 // provide gui to pose edit
 // added as tab0 in main window
@@ -25,12 +26,18 @@ public slots:
     void loadPose(int i);
     void saveProject();
     void loadProject();
+    void copyPose();
+    void renameComboBox();
 
 private:
     InputJoint* ij[22];
 
     QListWidget* posesList;
     Pose poseEditorList[10];
+
+    QComboBox* fromComboBox;
+    QComboBox* toComboBox;
+
 };
 
 #endif // POSEEDITOR_H
