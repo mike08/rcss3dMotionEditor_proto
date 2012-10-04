@@ -11,7 +11,7 @@ SequenceMovement::~SequenceMovement(){}
 
 std::string SequenceMovement::getNextAngle(Action &act, World &w){
 
-    std::cout << "SequenceMovement::getNextAngle" << std::endl;
+//    std::cout << "SequenceMovement::getNextAngle" << std::endl;
 
     resetAngleMap();
 

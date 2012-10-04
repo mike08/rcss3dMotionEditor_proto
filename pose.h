@@ -17,8 +17,11 @@ public:
     Pose();
     Pose(double value[22]);
 
+    void setTarget(int i, double v);
+    void setGain(double v);
     double getGain();
     double* getTarget();
+    double getTarget(int i);
 
     Pose& operator=(const Pose& obj);
 };

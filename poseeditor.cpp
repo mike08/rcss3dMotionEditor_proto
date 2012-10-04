@@ -2,6 +2,13 @@
 #include <QHBoxLayout>
 #include <QGridLayout>
 #include <QDebug>
+#include <QPushButton>
+#include <QFileDialog>
+#include <fstream>
+#include <vector>
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+
 
 PoseEditor::PoseEditor(QWidget *parent) :
     QWidget(parent)
@@ -41,6 +48,16 @@ PoseEditor::PoseEditor(QWidget *parent) :
     posesList->addItem(tr("pose8"));
     posesList->addItem(tr("pose9"));
     posesList->setCurrentRow(0);
+    for(int i=0; i< 10; i++){
+        posesList->item(i)->setFlags(posesList->item(i)->flags() | Qt::ItemIsEditable);
+    }
+    QPushButton *saveProjectButton = new QPushButton(tr("save project"));
+    QPushButton *loadProjectButton = new QPushButton(tr("load project"));
+
+    QVBoxLayout *utilityLayout = new QVBoxLayout();
+    utilityLayout->addWidget(posesList);
+    utilityLayout->addWidget(saveProjectButton);
+    utilityLayout->addWidget(loadProjectButton);
 
     QGridLayout *jointLayout = new QGridLayout();
     jointLayout->addWidget(ij[0], 0, 0, 1, 2);
@@ -51,7 +68,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
     }
 
     QHBoxLayout *entireLayout = new QHBoxLayout();
-    entireLayout->addWidget(posesList);
+    entireLayout->addLayout(utilityLayout);
     entireLayout->addLayout(jointLayout);
 
     this->setLayout(entireLayout);
@@ -70,6 +87,8 @@ PoseEditor::PoseEditor(QWidget *parent) :
 
     connect(posesList, SIGNAL(currentRowChanged(int)), this, SLOT(changePoseListRow(int)));
 
+    connect(saveProjectButton, SIGNAL(clicked()), this, SLOT(saveProject()));
+    connect(loadProjectButton, SIGNAL(clicked()), this, SLOT(loadProject()));
 }
 
 void PoseEditor::makeNewPose(){
@@ -99,4 +118,78 @@ void PoseEditor::loadPose(Pose p){
 void PoseEditor::loadPose(int i){
     //    qDebug() << "poseEditorList changed to " << i;
     loadPose(poseEditorList[i]);
+}
+
+void PoseEditor::saveProject(){
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save File"), QDir::currentPath(), tr("rcss3dPoseProject : ppj (*.ppj);;AllFiles(*.*)"));
+    if(filename.isEmpty()){
+        qDebug() << "PoseEditor : filename is empty";
+        return;
+    }
+    if(!filename.endsWith(".ppj")){
+        qDebug() << "PoseEditor:saveProject : file type isn't \"ppj\"";
+        return;
+    }
+
+    std::ofstream ofs;
+    ofs.open(filename.toStdString().c_str());
+
+    for(int i=0; i<10; i++){
+        ofs << "pose," << i << ",name," << posesList->item(i)->text().toStdString() << std::endl;
+        ofs << "pose," << i << ",gain," << poseEditorList[i].getGain() << std::endl;
+        for(int j=0; j<22; j++){
+            ofs << "pose," << i << ",joint," << j << "," << poseEditorList[i].getTarget(j) << std::endl;
+        }
+    }
+
+    ofs.close();
+}
+
+void PoseEditor::loadProject(){
+    QString filename = QFileDialog::getOpenFileName(this, tr("Load File"), QDir::currentPath(), tr("rcss3dPoseProject : ppj (*.ppj);;AllFiles(*.*)"));
+    if(filename.isEmpty()){
+        qDebug() << "PoseEditor:loadProject : filename is empty";
+        return;
+    }
+    if(!filename.endsWith(".ppj")){
+        qDebug() << "PoseEditor:loadProject : file type isn't \"ppj\"";
+        return;
+    }
+
+    std::ifstream ifs(filename.toStdString().c_str());
+    std::string str;
+
+    while(std::getline(ifs, str)){ // for all line in file
+        std::vector<std::string> splitLine;
+        boost::algorithm::split(splitLine, str, boost::is_any_of(","));
+/*
+        for(std::vector<std::string>::iterator it = splitLine.begin(); it != splitLine.end(); it++){
+            std::cout << *it << ":";
+        }
+        std::cout << std::endl;
+*/
+        std::vector<std::string>::iterator it = splitLine.begin();
+        if(*it == "pose"){
+            it++;
+            int i = boost::lexical_cast<int>(*it);
+            it++;
+            if(*it == "name"){
+                it++;
+                std::string nameStr = *it;
+                QString nameQStr(nameStr.c_str());
+                posesList->item(i)->setText(nameQStr);
+            }else if(*it == "gain"){
+                it++;
+                double gain = boost::lexical_cast<double>(*it);
+                poseEditorList[i].setGain(gain);
+            }else if(*it == "joint"){
+                it++;
+                int jointNum = boost::lexical_cast<int>(*it);
+                it++;
+                double target = boost::lexical_cast<double>(*it);
+                poseEditorList[i].setTarget(jointNum, target);
+            }
+        }
+    }
+    changePoseListRow(posesList->currentRow());
 }

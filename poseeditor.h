@@ -23,6 +23,8 @@ public slots:
     void changePoseListRow(int i);
     void loadPose(Pose p); // set slider and spinbox by loaded pose
     void loadPose(int i);
+    void saveProject();
+    void loadProject();
 
 private:
     InputJoint* ij[22];

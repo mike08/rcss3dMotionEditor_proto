@@ -159,6 +159,6 @@ void meMainWindow::changeBeaming(bool b){
 }
 
 void meMainWindow::setSequenceToRobot(Sequence s){
-    qDebug() << "new seq num = " << s.getNum();
+//    qDebug() << "new seq num = " << s.getNum();
     robo->setSequence(s);
 }
