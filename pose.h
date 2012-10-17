@@ -17,6 +17,7 @@ public:
     Pose();
     Pose(double value[22]);
 
+    void clear();
     void setTarget(int i, double v);
     void setGain(double v);
     double getGain();

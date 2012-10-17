@@ -35,6 +35,10 @@ bool Sequence::setPose(int n, Pose p){
 bool Sequence::clear(){
     num = 0;
 
+    for(int i=0; i<MAX_NUM; i++){
+        poses[i].clear();
+    }
+
     return true;
 }
 

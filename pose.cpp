@@ -3,11 +3,14 @@
 
 Pose::Pose()
 {
+/*
     for(int i=0; i<22; i++){
         target[i] = 0;
     }
 
     gain = 0.05;
+*/
+    clear();
 }
 
 Pose::Pose(double value[]){
@@ -15,6 +18,13 @@ Pose::Pose(double value[]){
         target[i] = value[i];
     }
 
+    gain = 0.05;
+}
+
+Pose::clear(){
+    for(int i=0; i<22; i++){
+        target[i] = 0;
+    }
     gain = 0.05;
 }
 

@@ -19,7 +19,7 @@ public:
     // bool -> true:succeed  false:failed
     bool addPose(Pose p); // add "p" in poses[num] and update num
     bool setPose(int n, Pose p); // overwrite poses[n-1] by "p"
-    bool clear(); // clear poses and reset number (actually, poses isn't std::vector, so clear() just reset number)
+    bool clear(); // clear poses and reset number
     int getNum(); // get how many poses the sequence has
     Pose getPose(int i); // get poses[i] .  checked not to access poses[larger_than_num]
 
