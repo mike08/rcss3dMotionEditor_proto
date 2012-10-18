@@ -21,7 +21,7 @@ Pose::Pose(double value[]){
     gain = 0.05;
 }
 
-Pose::clear(){
+void Pose::clear(){
     for(int i=0; i<22; i++){
         target[i] = 0;
     }

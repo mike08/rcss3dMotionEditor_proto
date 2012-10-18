@@ -53,6 +53,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
     for(int i=0; i< 10; i++){
         posesList->item(i)->setFlags(posesList->item(i)->flags() | Qt::ItemIsEditable);
     }
+//    posesList->setEditTriggers(QAbstractItemView::DoubleClicked);
     QPushButton *saveProjectButton = new QPushButton(tr("save project"));
     QPushButton *loadProjectButton = new QPushButton(tr("load project"));
 
@@ -109,7 +110,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
     connect(loadProjectButton, SIGNAL(clicked()), this, SLOT(loadProject()));
     connect(copyButton, SIGNAL(clicked()), this, SLOT(copyPose()));
     connect(posesList, SIGNAL(currentTextChanged(QString)), this, SLOT(renameComboBox()));
-
+//    connect(posesList, SIGNAL(dataChanged()), this, SLOT(renameComboBox())); // dataChanged is not SIGNAL!
 }
 
 void PoseEditor::makeNewPose(){
@@ -221,6 +222,7 @@ void PoseEditor::copyPose(){
 }
 
 void PoseEditor::renameComboBox(){
+    qDebug() << "PoseEditor:renameComboBox()";
     fromComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
     toComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
 }
