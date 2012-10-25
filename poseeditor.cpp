@@ -109,8 +109,9 @@ PoseEditor::PoseEditor(QWidget *parent) :
     connect(saveProjectButton, SIGNAL(clicked()), this, SLOT(saveProject()));
     connect(loadProjectButton, SIGNAL(clicked()), this, SLOT(loadProject()));
     connect(copyButton, SIGNAL(clicked()), this, SLOT(copyPose()));
-    connect(posesList, SIGNAL(currentTextChanged(QString)), this, SLOT(renameComboBox()));
+    connect(posesList, SIGNAL(currentRowChanged(int)), this, SLOT(renameComboBox()));
 //    connect(posesList, SIGNAL(dataChanged()), this, SLOT(renameComboBox())); // dataChanged is not SIGNAL!
+    connect(posesList, SIGNAL(currentRowChanged(int)), fromComboBox, SLOT(setCurrentIndex(int)));
 }
 
 void PoseEditor::makeNewPose(){
