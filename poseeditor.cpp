@@ -92,6 +92,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
 
     this->setLayout(entireLayout);
     this->setMinimumSize(300, 350);
+    posesList->setMaximumWidth(250);
 
     //signal slot connection
     // if value changed, modify shared information
@@ -223,7 +224,7 @@ void PoseEditor::copyPose(){
 }
 
 void PoseEditor::renameComboBox(){
-    qDebug() << "PoseEditor:renameComboBox()";
+//    qDebug() << "PoseEditor:renameComboBox()";
     fromComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
     toComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
 }

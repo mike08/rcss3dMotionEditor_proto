@@ -4,12 +4,14 @@
 GuiEditorTab::GuiEditorTab(QWidget *parent) :
     QTabWidget(parent)
 {
-    pe = new PoseEditor(this);
-    this->addTab(pe, tr("pose edit"));
+    poseEdit = new PoseEditor(this);
+    seqEdit = new SequenceEditor(this);
 
-    connect(pe, SIGNAL(newPoseMade(Pose)), this, SLOT(poseEditorReceiver(Pose)));
+    this->addTab(poseEdit, tr("pose edit"));
+    this->addTab(seqEdit, tr("sequence Edit"));
 
-    //connect(seceditor, SIGNAL(newSeq), this, SIGNAL(newSeqMade))
+    connect(poseEdit, SIGNAL(newPoseMade(Pose)), this, SLOT(poseEditorReceiver(Pose)));
+    connect(seqEdit, SIGNAL(newSequenceMade(Sequence)), this, SIGNAL(newSequenceMade(Sequence)));
 
 
     //some connect when change editor type (ex. poseEditor->seqEditor)

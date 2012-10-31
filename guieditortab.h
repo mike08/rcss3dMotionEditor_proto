@@ -4,6 +4,7 @@
 #include <QTabWidget>
 #include "sequence.h"
 #include "poseeditor.h"
+#include "sequenceeditor.h"
 
 /*
     GuiEditorTab
@@ -26,7 +27,8 @@ public slots:
     void poseEditorReceiver(Pose p);
 
 private:
-    PoseEditor* pe;
+    PoseEditor* poseEdit;
+    SequenceEditor* seqEdit;
 };
 
 #endif // GUIEDITORTAB_H
