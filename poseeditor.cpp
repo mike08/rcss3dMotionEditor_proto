@@ -10,7 +10,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 
-
+Q_DECLARE_METATYPE(Pose)
 
 PoseEditor::PoseEditor(QWidget *parent) :
     QWidget(parent)
@@ -52,6 +52,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
     posesList->setCurrentRow(0);
     for(int i=0; i< 10; i++){
         posesList->item(i)->setFlags(posesList->item(i)->flags() | Qt::ItemIsEditable);
+        posesList->item(i)->setData(Qt::UserRole, QVariant::fromValue(poseEditorList[i]));
     }
 //    posesList->setEditTriggers(QAbstractItemView::DoubleClicked);
     QPushButton *saveProjectButton = new QPushButton(tr("save project"));
@@ -122,6 +123,7 @@ void PoseEditor::makeNewPose(){
     }
     Pose p(inputedValue);
     poseEditorList[posesList->currentRow()] = p;
+    posesList->currentItem()->setData(Qt::UserRole, QVariant::fromValue(p));
 //    qDebug() << "newPoseMade @ makeNewPose";
     emit newPoseMade(p);
 }
@@ -221,10 +223,15 @@ void PoseEditor::loadProject(){
 void PoseEditor::copyPose(){
     poseEditorList[toComboBox->currentIndex()] = poseEditorList[fromComboBox->currentIndex()];
     changePoseListRow(posesList->currentRow());
+    posesList->item(toComboBox->currentIndex())->setData(Qt::UserRole, QVariant::fromValue(poseEditorList[fromComboBox->currentIndex()]));
 }
 
 void PoseEditor::renameComboBox(){
 //    qDebug() << "PoseEditor:renameComboBox()";
     fromComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
     toComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
+}
+
+void PoseEditor::getPoseList(){
+    emit poseList(posesList);
 }

@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QDebug>
 
 SequenceEditor::SequenceEditor(QWidget *parent) :
     QWidget(parent)
@@ -34,8 +35,37 @@ SequenceEditor::SequenceEditor(QWidget *parent) :
     right->addWidget(removeButton);
 
     entire->addLayout(left);
-    entire->addWidget(new QLabel(tr("    ")));
+    entire->addWidget(new QLabel(tr("    "))); // spacer is better
     entire->addLayout(right);
 
     this->setLayout(entire);
+
+    connect(loadPoseListButton, SIGNAL(clicked()), this, SIGNAL(requestPoseList()));
+
+    connect(addButton, SIGNAL(clicked()), this, SLOT(moveItemToSendList()));
+}
+
+Q_DECLARE_METATYPE(Pose)
+
+void SequenceEditor::copyPoseList(QListWidget *list){
+//    poseListFromEditor = list;
+//    qDebug() << "seqedit::copyPoseList";
+
+    poseListFromEditor->clear();
+
+    for(int i=0; i<list->count(); i++){
+        poseListFromEditor->addItem(list->item(i)->text());
+        poseListFromEditor->item(i)->setData(Qt::UserRole, list->item(i)->data(Qt::UserRole));
+    }
+}
+
+void SequenceEditor::moveItemToSendList(){
+//    qDebug() << poseListFromEditor->currentRow();
+    if(poseListFromEditor->currentRow() == -1){
+        //not selected any item
+        return;
+    }
+    Pose temp = poseListFromEditor->currentItem()->data(Qt::UserRole).value<Pose>();
+//    double tempD = temp.getTarget(3);
+//    qDebug() << tempD;
 }

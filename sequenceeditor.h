@@ -13,8 +13,11 @@ public:
     
 signals:
     void newSequenceMade(Sequence);
+    void requestPoseList();
 
 public slots:
+    void copyPoseList(QListWidget*);
+    void moveItemToSendList();
 
 private:
     QListWidget* poseListFromEditor;

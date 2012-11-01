@@ -17,6 +17,8 @@ GuiEditorTab::GuiEditorTab(QWidget *parent) :
     //some connect when change editor type (ex. poseEditor->seqEditor)
     //connect(this, SIGNAL(currentChanged(int)), this, SLOT(editorChanged(int))) // ?
 
+    connect(seqEdit, SIGNAL(requestPoseList()), poseEdit, SLOT(getPoseList()));
+    connect(poseEdit, SIGNAL(poseList(QListWidget*)), seqEdit, SLOT(copyPoseList(QListWidget*)));
 }
 
 void GuiEditorTab::poseEditorReceiver(Pose p){

@@ -18,6 +18,7 @@ public:
 
 signals:
     void newPoseMade(Pose);
+    void poseList(QListWidget*);
 
 public slots:
     void makeNewPose();
@@ -29,11 +30,13 @@ public slots:
     void copyPose();
     void renameComboBox();
 
+    void getPoseList();
+
 private:
     InputJoint* ij[22];
 
     QListWidget* posesList;
-    Pose poseEditorList[10];
+    Pose poseEditorList[10]; // nameing is not good...
 
     QComboBox* fromComboBox;
     QComboBox* toComboBox;
