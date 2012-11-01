@@ -43,6 +43,8 @@ SequenceEditor::SequenceEditor(QWidget *parent) :
     connect(loadPoseListButton, SIGNAL(clicked()), this, SIGNAL(requestPoseList()));
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(moveItemToSendList()));
+    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeItemFromSendList()));
+    connect(testButton, SIGNAL(clicked()), this, SLOT(testSequence()));
 }
 
 Q_DECLARE_METATYPE(Pose)
@@ -65,7 +67,29 @@ void SequenceEditor::moveItemToSendList(){
         //not selected any item
         return;
     }
-    Pose temp = poseListFromEditor->currentItem()->data(Qt::UserRole).value<Pose>();
+//    Pose temp = poseListFromEditor->currentItem()->data(Qt::UserRole).value<Pose>();
 //    double tempD = temp.getTarget(3);
 //    qDebug() << tempD;
+    QListWidgetItem* added = new QListWidgetItem(poseListFromEditor->currentItem()->text());
+    added->setData(Qt::UserRole, poseListFromEditor->currentItem()->data(Qt::UserRole));
+    poseListToSend->addItem(added);
+
+    Pose temp = poseListToSend->item(poseListToSend->count()-1)->data(Qt::UserRole).value<Pose>();
+    qDebug() << temp.getTarget(1);
+}
+
+void SequenceEditor::removeItemFromSendList(){
+    if(poseListToSend->currentRow() == -1){
+        return;
+    }
+    poseListToSend->takeItem(poseListToSend->currentRow());
+}
+
+void SequenceEditor::testSequence(){
+    Sequence tempSeq;
+
+    for(int i=0; i<poseListToSend->count(); i++){
+        tempSeq.addPose(poseListToSend->item(i)->data(Qt::UserRole).value<Pose>());
+    }
+    emit newSequenceMade(tempSeq);
 }

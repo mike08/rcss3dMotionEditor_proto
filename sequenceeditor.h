@@ -18,6 +18,8 @@ signals:
 public slots:
     void copyPoseList(QListWidget*);
     void moveItemToSendList();
+    void removeItemFromSendList();
+    void testSequence();
 
 private:
     QListWidget* poseListFromEditor;
