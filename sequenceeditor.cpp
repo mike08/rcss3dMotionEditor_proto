@@ -54,6 +54,7 @@ void SequenceEditor::copyPoseList(QListWidget *list){
 //    qDebug() << "seqedit::copyPoseList";
 
     poseListFromEditor->clear();
+    poseListToSend->clear();
 
     for(int i=0; i<list->count(); i++){
         poseListFromEditor->addItem(list->item(i)->text());
@@ -74,8 +75,13 @@ void SequenceEditor::moveItemToSendList(){
     added->setData(Qt::UserRole, poseListFromEditor->currentItem()->data(Qt::UserRole));
     poseListToSend->addItem(added);
 
-    Pose temp = poseListToSend->item(poseListToSend->count()-1)->data(Qt::UserRole).value<Pose>();
-    qDebug() << temp.getTarget(1);
+    // select next item
+    if(poseListFromEditor->currentRow() != poseListFromEditor->count()){
+        poseListFromEditor->setCurrentRow(poseListFromEditor->currentRow()+1);
+    }
+
+//    Pose temp = poseListToSend->item(poseListToSend->count()-1)->data(Qt::UserRole).value<Pose>();
+//    qDebug() << temp.getTarget(1);
 }
 
 void SequenceEditor::removeItemFromSendList(){
