@@ -39,6 +39,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
     ij[21]= new InputJoint(tr("rlj6"), -25, 45, this);
 
     posesList = new QListWidget();
+    /*
     posesList->addItem(tr("pose0")); // using for(i ; i< length_of_posesList; i++) is better
     posesList->addItem(tr("pose1"));
     posesList->addItem(tr("pose2"));
@@ -54,7 +55,14 @@ PoseEditor::PoseEditor(QWidget *parent) :
         posesList->item(i)->setFlags(posesList->item(i)->flags() | Qt::ItemIsEditable);
         posesList->item(i)->setData(Qt::UserRole, QVariant::fromValue(poseEditorList[i]));
     }
-//    posesList->setEditTriggers(QAbstractItemView::DoubleClicked);
+    */
+    for(int i=0; i<10; i++){
+        Pose tempP;
+        addPoseItem(QString("pose%1").arg(i), tempP);
+    }
+    posesList->setCurrentRow(0);
+
+    //    posesList->setEditTriggers(QAbstractItemView::DoubleClicked);
     QPushButton *saveProjectButton = new QPushButton(tr("save project"));
     QPushButton *loadProjectButton = new QPushButton(tr("load project"));
 
@@ -117,12 +125,15 @@ PoseEditor::PoseEditor(QWidget *parent) :
 }
 
 void PoseEditor::makeNewPose(){
+    if(posesList->currentRow() == -1){
+        return;
+    }
     double inputedValue[22];
     for(int i=0; i<22; i++){
         inputedValue[i] = ij[i]->getValue();
     }
     Pose p(inputedValue);
-    poseEditorList[posesList->currentRow()] = p;
+//    poseEditorList[posesList->currentRow()] = p;
     posesList->currentItem()->setData(Qt::UserRole, QVariant::fromValue(p));
 //    qDebug() << "newPoseMade @ makeNewPose";
     emit newPoseMade(p);
@@ -132,7 +143,9 @@ void PoseEditor::changePoseListRow(int i){
 //    qDebug() << "changePoseListRow " << i;
     loadPose(i);
 //    qDebug() << "newPoseMade @ changePoseListRow";
-    emit newPoseMade(poseEditorList[i]);
+    Pose p;
+    p = posesList->currentItem()->data(Qt::UserRole).value<Pose>();
+    emit newPoseMade(p);
 }
 
 void PoseEditor::loadPose(Pose p){
@@ -142,8 +155,8 @@ void PoseEditor::loadPose(Pose p){
 }
 
 void PoseEditor::loadPose(int i){
-    //    qDebug() << "poseEditorList changed to " << i;
-    loadPose(poseEditorList[i]);
+    Pose p = posesList->item(i)->data(Qt::UserRole).value<Pose>();
+    loadPose(p);
 }
 
 void PoseEditor::saveProject(){
@@ -162,9 +175,11 @@ void PoseEditor::saveProject(){
 
     for(int i=0; i<10; i++){
         ofs << "pose," << i << ",name," << posesList->item(i)->text().toStdString() << std::endl;
-        ofs << "pose," << i << ",gain," << poseEditorList[i].getGain() << std::endl;
+//        ofs << "pose," << i << ",gain," << poseEditorList[i].getGain() << std::endl;
+        ofs << "pose," << i << ",gain," << posesList->item(i)->data(Qt::UserRole).value<Pose>().getGain() << std::endl;
         for(int j=0; j<22; j++){
-            ofs << "pose," << i << ",joint," << j << "," << poseEditorList[i].getTarget(j) << std::endl;
+//            ofs << "pose," << i << ",joint," << j << "," << poseEditorList[i].getTarget(j) << std::endl;
+            ofs << "pose," << i << ",joint," << j << "," << posesList->item(i)->data(Qt::UserRole).value<Pose>().getTarget(j) << std::endl;
         }
     }
 
@@ -207,13 +222,19 @@ void PoseEditor::loadProject(){
             }else if(*it == "gain"){
                 it++;
                 double gain = boost::lexical_cast<double>(*it);
-                poseEditorList[i].setGain(gain);
+                Pose p = posesList->item(i)->data(Qt::UserRole).value<Pose>();
+                p.setGain(gain);
+                posesList->item(i)->setData(Qt::UserRole, QVariant::fromValue(p));
+//                poseEditorList[i].setGain(gain);
             }else if(*it == "joint"){
                 it++;
                 int jointNum = boost::lexical_cast<int>(*it);
                 it++;
                 double target = boost::lexical_cast<double>(*it);
-                poseEditorList[i].setTarget(jointNum, target);
+                Pose p = posesList->item(i)->data(Qt::UserRole).value<Pose>();
+                p.setTarget(jointNum, target);
+                posesList->item(i)->setData(Qt::UserRole, QVariant::fromValue(p));
+//                poseEditorList[i].setTarget(jointNum, target);
             }
         }
     }
@@ -221,9 +242,10 @@ void PoseEditor::loadProject(){
 }
 
 void PoseEditor::copyPose(){
-    poseEditorList[toComboBox->currentIndex()] = poseEditorList[fromComboBox->currentIndex()];
+//    poseEditorList[toComboBox->currentIndex()] = poseEditorList[fromComboBox->currentIndex()];
+    posesList->item(toComboBox->currentIndex())->setData(Qt::UserRole, posesList->item(fromComboBox->currentIndex())->data(Qt::UserRole));
     changePoseListRow(posesList->currentRow());
-    posesList->item(toComboBox->currentIndex())->setData(Qt::UserRole, QVariant::fromValue(poseEditorList[fromComboBox->currentIndex()]));
+//    posesList->item(toComboBox->currentIndex())->setData(Qt::UserRole, QVariant::fromValue(poseEditorList[fromComboBox->currentIndex()]));
 }
 
 void PoseEditor::renameComboBox(){
@@ -234,4 +256,16 @@ void PoseEditor::renameComboBox(){
 
 void PoseEditor::getPoseList(){
     emit poseList(posesList);
+}
+
+void PoseEditor::addPoseItem(QString txt, Pose p){
+    QListWidgetItem* add = new QListWidgetItem();
+    add->setText(txt);
+    add->setFlags(add->flags() | Qt::ItemIsEditable);
+    add->setData(Qt::UserRole, QVariant::fromValue(p));
+    posesList->addItem(add);
+}
+
+void PoseEditor::removeSelectedItem(){
+    posesList->removeItemWidget(posesList->currentItem());
 }
