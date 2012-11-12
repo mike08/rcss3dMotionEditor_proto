@@ -119,8 +119,8 @@ PoseEditor::PoseEditor(QWidget *parent) :
     connect(saveProjectButton, SIGNAL(clicked()), this, SLOT(saveProject()));
     connect(loadProjectButton, SIGNAL(clicked()), this, SLOT(loadProject()));
     connect(copyButton, SIGNAL(clicked()), this, SLOT(copyPose()));
-    connect(posesList, SIGNAL(currentRowChanged(int)), this, SLOT(renameComboBox()));
-//    connect(posesList, SIGNAL(dataChanged()), this, SLOT(renameComboBox())); // dataChanged is not SIGNAL!
+//    connect(posesList, SIGNAL(currentRowChanged(int)), this, SLOT(renameComboBox()));
+    connect(posesList, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(renameComboBox()));
     connect(posesList, SIGNAL(currentRowChanged(int)), fromComboBox, SLOT(setCurrentIndex(int)));
 }
 
@@ -225,7 +225,6 @@ void PoseEditor::loadProject(){
                 Pose p = posesList->item(i)->data(Qt::UserRole).value<Pose>();
                 p.setGain(gain);
                 posesList->item(i)->setData(Qt::UserRole, QVariant::fromValue(p));
-//                poseEditorList[i].setGain(gain);
             }else if(*it == "joint"){
                 it++;
                 int jointNum = boost::lexical_cast<int>(*it);
@@ -234,7 +233,7 @@ void PoseEditor::loadProject(){
                 Pose p = posesList->item(i)->data(Qt::UserRole).value<Pose>();
                 p.setTarget(jointNum, target);
                 posesList->item(i)->setData(Qt::UserRole, QVariant::fromValue(p));
-//                poseEditorList[i].setTarget(jointNum, target);
+//                posesList->item(i)->data(Qt::UserRole).value<Pose>().setTarget(jointNum, target); // not works
             }
         }
     }
@@ -269,3 +268,4 @@ void PoseEditor::addPoseItem(QString txt, Pose p){
 void PoseEditor::removeSelectedItem(){
     posesList->removeItemWidget(posesList->currentItem());
 }
+
