@@ -11,7 +11,6 @@
 #include <QAction>
 #include "guieditortab.h"
 
-
 /*
     main window of program.
     This class manage all gui classes and robot(server connection and joint angle manager).
@@ -31,6 +30,9 @@ public slots:
     void onTimer();
     void changeBeaming(bool);
     void setSequenceToRobot(Sequence);
+
+    void sendStandUpAomuke();
+    void sendStandUpUtsubuse();
 protected:
     void createMenus();
 
@@ -46,9 +48,12 @@ protected:
     PoseEditor* pe;
 
 
-    QAction *connectRobotAct;
+//    QAction *connectRobotAct;
     QAction *beamingAct;
     // QAction *displayJointPictureAct;
+    QAction *standUpAomukeAct;
+    QAction *standUpUtsubuseAct;
+
 };
 
 #endif // MEMAINWINDOW_H

@@ -4,6 +4,8 @@
 #include <QToolBar>
 #include <QDebug>
 
+#include "util.h"
+
 meMainWindow::meMainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -59,6 +61,8 @@ meMainWindow::meMainWindow(QWidget *parent)
 
     connect(beamingAct, SIGNAL(toggled(bool)), this, SLOT(changeBeaming(bool)));
 //    connect(connectRobotAct, SIGNAL(triggered()), this, SLOT(connectRobot()));
+    connect(standUpAomukeAct, SIGNAL(triggered()), this, SLOT(sendStandUpAomuke()));
+    connect(standUpUtsubuseAct, SIGNAL(triggered()), this, SLOT(sendStandUpUtsubuse()));
 
     connect(gui, SIGNAL(newSequenceMade(Sequence)), this, SLOT(setSequenceToRobot(Sequence)));
 
@@ -73,7 +77,12 @@ void meMainWindow::createMenus(){
     beamingAct = new QAction(tr("beam"), this);
     beamingAct->setCheckable(true);
     beamingAct->setChecked(true);
-    connectRobotAct = new QAction(tr("connect"), this);
+
+    standUpAomukeAct = new QAction(tr("standUp aomuke"), this);
+    standUpUtsubuseAct = new QAction(tr("standUp utsubuse"), this);
+
+//    connectRobotAct = new QAction(tr("connect"), this); // reconnect function not works now
+
 /*
     //create and set menu
     QMenu* robotMenu = menuBar()->addMenu(tr("&Robot"));
@@ -89,7 +98,8 @@ void meMainWindow::createMenus(){
     //create and set toolbar
     QToolBar *robotBar = addToolBar(tr("Robot"));
     robotBar->addAction(beamingAct);
-
+    robotBar->addAction(standUpAomukeAct);
+    robotBar->addAction(standUpUtsubuseAct);
 }
 
 meMainWindow::~meMainWindow()
@@ -161,4 +171,134 @@ void meMainWindow::changeBeaming(bool b){
 void meMainWindow::setSequenceToRobot(Sequence s){
 //    qDebug() << "new seq num = " << s.getNum();
     robo->setSequence(s);
+}
+
+void meMainWindow::sendStandUpAomuke(){
+    Pose reverse0;
+    reverse0.setTarget(laj2, 90);
+    reverse0.setTarget(raj2, -90);
+    Pose reverse1;
+    reverse1.setTarget(laj1, -120);
+    reverse1.setTarget(raj1, -120);
+    reverse1.setTarget(laj3, 90);
+    reverse1.setTarget(raj3, -90);
+    reverse1.setTarget(laj4, -45);
+    reverse1.setTarget(raj4, 45);
+    reverse1.setTarget(llj5, 75);
+    reverse1.setTarget(rlj5, 75);
+    Pose reverse2;
+    reverse2.setTarget(laj1, -120);
+    reverse2.setTarget(raj1, -120);
+    reverse2.setTarget(laj3, 90);
+    reverse2.setTarget(raj3, -90);
+    reverse2.setTarget(laj4, -45);
+    reverse2.setTarget(raj4, 45);
+    reverse2.setTarget(llj1, -90);
+    reverse2.setTarget(rlj1, -90);
+    reverse2.setTarget(llj3, 100);
+    reverse2.setTarget(rlj3, 100);
+    reverse2.setTarget(llj4, -130);
+    reverse2.setTarget(rlj4, -130);
+    reverse2.setTarget(llj5, 75);
+    reverse2.setTarget(rlj5, 75);
+    Pose reverse3;
+    reverse3.setTarget(laj1, -45);
+    reverse3.setTarget(raj1, -45);
+    reverse3.setTarget(llj1, -90);
+    reverse3.setTarget(rlj1, -90);
+    reverse3.setTarget(llj3, 100);
+    reverse3.setTarget(rlj3, 100);
+    reverse3.setTarget(llj4, -90);
+    reverse3.setTarget(rlj4, -90);
+    reverse3.setTarget(llj5, -45);
+    reverse3.setTarget(rlj5, -45);
+    /*
+    Pose reverse4;
+    reverse4.setGain(0.01);
+    reverse4.setTarget(laj1, -100);
+    reverse4.setTarget(raj1, -100);
+    reverse4.setTarget(laj3, -90);
+    reverse4.setTarget(raj3, 90);
+    reverse4.setTarget(laj4, -90);
+    reverse4.setTarget(raj4, 90);
+    */
+    Pose stand1;
+    stand1.setTarget(laj1, -45);
+    stand1.setTarget(raj1, -45);
+    stand1.setTarget(laj3, -90);
+    stand1.setTarget(raj3, 90);
+    stand1.setTarget(llj1, -90);
+    stand1.setTarget(rlj1, -90);
+    stand1.setTarget(llj3, 100);
+    stand1.setTarget(rlj3, 100);
+    stand1.setTarget(llj4, -130);
+    stand1.setTarget(rlj4, -130);
+    Pose stand2;
+    stand2.setGain(0.01);
+    stand2.setTarget(laj1, -100);
+    stand2.setTarget(raj1, -100);
+    stand2.setTarget(laj3, -90);
+    stand2.setTarget(raj3, 90);
+    stand2.setTarget(laj4, -90);
+    stand2.setTarget(raj4, 90);
+
+
+    Sequence reverse;
+    reverse.addPose(reverse0);
+    reverse.addPose(reverse1);
+    reverse.addPose(reverse2);
+    reverse.addPose(reverse3);
+//    reverse.addPose(reverse4);
+    reverse.addPose(stand1);
+    reverse.addPose(stand2);
+
+    robo->setSequence(reverse);
+}
+
+void meMainWindow::sendStandUpUtsubuse(){
+    Pose open;
+    open.setTarget(laj2, 95);
+    open.setTarget(raj2, -95);
+    Pose stand0;
+    stand0.setTarget(laj2, 45);
+    stand0.setTarget(raj2, -45);
+    stand0.setTarget(laj3, -90);
+    stand0.setTarget(raj3, 90);
+    stand0.setTarget(laj4, -90);
+    stand0.setTarget(raj4, 90);
+    stand0.setTarget(llj1, -90);
+    stand0.setTarget(rlj1, -90);
+    stand0.setTarget(llj3, 100);
+    stand0.setTarget(rlj3, 100);
+    stand0.setTarget(llj4, -130);
+    stand0.setTarget(rlj4, -130);
+    stand0.setTarget(llj5, 75);
+    stand0.setTarget(rlj5, 75);
+    Pose stand1;
+    stand1.setTarget(laj1, -45);
+    stand1.setTarget(raj1, -45);
+    stand1.setTarget(laj3, -90);
+    stand1.setTarget(raj3, 90);
+    stand1.setTarget(llj1, -90);
+    stand1.setTarget(rlj1, -90);
+    stand1.setTarget(llj3, 100);
+    stand1.setTarget(rlj3, 100);
+    stand1.setTarget(llj4, -130);
+    stand1.setTarget(rlj4, -130);
+    Pose stand2;
+    stand2.setGain(0.01);
+    stand2.setTarget(laj1, -100);
+    stand2.setTarget(raj1, -100);
+    stand2.setTarget(laj3, -90);
+    stand2.setTarget(raj3, 90);
+    stand2.setTarget(laj4, -90);
+    stand2.setTarget(raj4, 90);
+
+    Sequence stand;
+    stand.addPose(open);
+    stand.addPose(stand0);
+    stand.addPose(stand1);
+    stand.addPose(stand2);
+
+    robo->setSequence(stand);
 }
