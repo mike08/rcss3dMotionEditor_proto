@@ -58,7 +58,7 @@ PoseEditor::PoseEditor(QWidget *parent) :
     */
     for(int i=0; i<10; i++){
         Pose tempP;
-        addPoseItem(QString("pose%1").arg(i), tempP);
+        addPoseItem("pose"+QString::number(i), tempP);
     }
     posesList->setCurrentRow(0);
 
