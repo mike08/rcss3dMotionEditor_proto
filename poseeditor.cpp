@@ -251,6 +251,27 @@ void PoseEditor::renameComboBox(){
 //    qDebug() << "PoseEditor:renameComboBox()";
     fromComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
     toComboBox->setItemText(posesList->currentRow(), posesList->item(posesList->currentRow())->text());
+
+    int fromCurrent = fromComboBox->currentIndex();
+    int toCurrent = toComboBox->currentIndex();
+    QList<QString> poseNames;
+
+    for(int i=0; i<posesList->count(); i++){
+        poseNames.append(posesList->item(i)->text());
+    }
+
+    fromComboBox->clear();
+    toComboBox->clear();
+
+    fromComboBox->addItems(poseNames);
+    toComboBox->addItems(poseNames);
+
+    if(fromCurrent < fromComboBox->count()){
+        fromComboBox->setCurrentIndex(fromCurrent);
+    }
+    if(toCurrent < toComboBox->count()){
+        toComboBox->setCurrentIndex(toCurrent);
+    }
 }
 
 void PoseEditor::getPoseList(){
@@ -267,5 +288,6 @@ void PoseEditor::addPoseItem(QString txt, Pose p){
 
 void PoseEditor::removeSelectedItem(){
     posesList->removeItemWidget(posesList->currentItem());
+    renameComboBox();
 }
 
