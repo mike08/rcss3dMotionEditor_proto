@@ -29,6 +29,7 @@ meMainWindow::meMainWindow(QWidget *parent)
 //    robo->saveMeSIpointer(mesi);
 
     qDebug() << "starting program";
+    this->setWindowTitle("rcss3dMotionEditor");
 
     robo = NULL;
     beaming = true;

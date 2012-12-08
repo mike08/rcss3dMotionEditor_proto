@@ -1,7 +1,7 @@
 #ifndef MEMAINWINDOW_H
 #define MEMAINWINDOW_H
 
-#include <QtGui/QMainWindow>
+#include <QMainWindow>
 #include <QTimer>
 #include <iostream>
 #include "rcss3dsocket.h"
