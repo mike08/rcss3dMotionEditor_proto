@@ -57,6 +57,7 @@ void SequenceEditor::copyPoseList(QListWidget *list){
     poseListToSend->clear();
 
     for(int i=0; i<list->count(); i++){
+        // item->clone() is ok?
         poseListFromEditor->addItem(list->item(i)->text());
         poseListFromEditor->item(i)->setData(Qt::UserRole, list->item(i)->data(Qt::UserRole));
     }
