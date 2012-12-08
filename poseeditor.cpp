@@ -174,12 +174,12 @@ void PoseEditor::saveProject(){
     ofs.open(filename.toStdString().c_str());
 
     for(int i=0; i<10; i++){
-        ofs << "pose," << i << ",name," << posesList->item(i)->text().toStdString() << std::endl;
-//        ofs << "pose," << i << ",gain," << poseEditorList[i].getGain() << std::endl;
-        ofs << "pose," << i << ",gain," << posesList->item(i)->data(Qt::UserRole).value<Pose>().getGain() << std::endl;
+        ofs << "pose\t" << i << "\tname\t" << posesList->item(i)->text().toStdString() << std::endl;
+//        ofs << "pose\t" << i << "\tgain\t" << poseEditorList[i].getGain() << std::endl;
+        ofs << "pose\t" << i << "\tgain\t" << posesList->item(i)->data(Qt::UserRole).value<Pose>().getGain() << std::endl;
         for(int j=0; j<22; j++){
-//            ofs << "pose," << i << ",joint," << j << "," << poseEditorList[i].getTarget(j) << std::endl;
-            ofs << "pose," << i << ",joint," << j << "," << posesList->item(i)->data(Qt::UserRole).value<Pose>().getTarget(j) << std::endl;
+//            ofs << "pose\t" << i << "\tjoint\t" << j << "\t" << poseEditorList[i].getTarget(j) << std::endl;
+            ofs << "pose\t" << i << "\tjoint\t" << j << "\t" << posesList->item(i)->data(Qt::UserRole).value<Pose>().getTarget(j) << std::endl;
         }
     }
 
@@ -202,7 +202,7 @@ void PoseEditor::loadProject(){
 
     while(std::getline(ifs, str)){ // for all line in file
         std::vector<std::string> splitLine;
-        boost::algorithm::split(splitLine, str, boost::is_any_of(","));
+        boost::algorithm::split(splitLine, str, boost::is_any_of("\t"));
 /*
         for(std::vector<std::string>::iterator it = splitLine.begin(); it != splitLine.end(); it++){
             std::cout << *it << ":";
